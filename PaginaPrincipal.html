@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista Canciones</title>
+    <meta charset="utf-8" />
+    <link href="Styles/bootstrap.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <script type="text/jscript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script type="text/jscript" src="scriptPrincipal.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+</head>
+
+<body ng-app="scriptPrincipal">
+
+
+    <div ng-controller="FirstController">
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Canciones del Grupo de Alabanza</h1>
+                <p class="lead">Este es un listado de las canciones que el grupo de alabanza </p>
+            </div>
+        </div>
+
+
+		
+		
+		<div class="h1 text-success" id="titleSelectedSongs">Lista de canciones seleccionadas</div>
+			</br>
+		<table id="tableSelected" class="table table-striped table-bordered table-sm" >
+			<tr>
+              
+                <th>
+                    Nombre
+                </th>
+				<th>
+                    Tonalidad
+                </th>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Categoria
+                </th>
+				<th>
+                    Tempo
+                </th>
+				<th>
+                    Youtube
+                </th>
+				<th>
+                    Ensayo
+                </th>
+                <th>
+                    Ver
+                </th>
+				<th>
+					Accion
+                </th>
+				<th>
+					Mover
+                </th>  				
+            </tr>
+            <tr ng-repeat="x in selectedSongs  ">
+               
+                <td>
+                    {{x.nombre}}
+                </td>
+                <th>
+                    {{x.tonalidad}}
+                </th>
+				<td>
+                    {{x.autor}}
+                </td>
+                <td>
+                    {{x.categoria}}
+                </td>
+				<td>
+                    {{x.tempo}}
+                </td>
+				<td>
+                    <button class="btn btn-info {{x.visibleYoutube}}" type="button"  ng-click="Ver(x.youtube, x.visibleYoutube)">Youtube</button>
+                </td>
+				<td>
+                    <button class="btn btn-warning {{x.visibleEnsayo}}" type="button"  ng-click="Ver('canciones/'+x.url+'/'+x.ensayo,x.visibleEnsayo)">Ensayo</button>
+                </td>
+                <td>
+                    <a class="btn btn-success" href="canciones/{{x.url}}/Songs.html?tone={{x.tone}}">
+                        ver acordes
+                    </a>
+                </td>
+				<td>
+					<button class="btn btn-danger" type="button"  ng-click="Eliminar(x.id)">Eliminar</button>
+                </td> 
+				<td>
+					<button type="button" class="btn btn-default btn-sm"  ng-click="ModificarLugar(x.id,0)">
+						<span class="glyphicon glyphicon-arrow-up"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-sm"  ng-click="ModificarLugar(x.id,1)">
+						<span class="glyphicon glyphicon-arrow-down"></span>
+					</button>
+					
+                </td> 					
+            </tr>
+        </table>
+			</br>
+		<div class="h1 text-info" >Todas las canciones</div>
+		</br>
+        <table id="tableSongs" class="table table-striped table-bordered table-sm">
+            <tr>
+              
+                <th>
+                    Nombre
+                </th>
+				<th>
+                    Tonalidad
+                </th>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Categoria
+                </th>
+				<th>
+                    Tempo
+                </th>
+				<th>
+                    Youtube
+                </th>
+				<th>
+					Ensayo
+                </th>
+                <th>
+                    Ver
+                </th>
+				<th>
+                    Accion
+                </th>				
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="Text2" class="form-control" maxlength="50" ng-model="busqueda.nombre" />
+                </td>
+				 <td>
+                </td>
+                <td>
+                    <input type="text" id="Text3" class="form-control" maxlength="50" ng-model="busqueda.autor" />
+                </td>
+                <td>
+                    <input type="text" id="Text4" class="form-control" maxlength="50" ng-model="busqueda.categoria" />
+                </td>
+				<td>
+				 </td>
+				<td>
+				</td>
+				<td>
+                </td>
+				<td>
+                </td>
+				<td>
+                </td>				
+            </tr>
+            <tr ng-repeat="x in canciones | filter:busqueda | orderObjectBy:'nombre' ">
+               
+                <td>
+                    {{x.nombre}}
+                </td>
+				<td>
+                    {{x.tonalidad}}
+                </td>
+                <td>
+                    {{x.autor}}
+                </td>
+                <td>
+                    {{x.categoria}}
+                </td>
+				<td>
+                    {{x.tempo}}
+                </td>
+				<td>
+					<button class="btn btn-info {{x.visibleYoutube}}" type="button"  ng-click="Ver(x.youtube, x.visibleYoutube)" >Youtube</button>
+                    
+                </td>
+				<td>
+					<button class="btn btn-warning {{x.visibleEnsayo}}" type="button"  ng-click="Ver('canciones/'+x.url+'/'+x.ensayo, x.visibleEnsayo)">Ensayo</button>
+                    
+                </td>
+                <td>
+                    <a class="btn btn-success" href="canciones/{{x.url}}/Songs.html?tone={{x.tone}}">
+                        ver acordes
+                    </a>
+                </td>
+				<td>
+					<button class="btn btn-default" type="button"  ng-click="Agregar(x.id)">Agregar a la lista</button>
+      
+                </td> 				
+            </tr>
+        </table>
+
+
+    </div>
+
+
+</body>
+</html>
